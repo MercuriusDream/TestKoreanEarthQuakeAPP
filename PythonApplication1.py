@@ -4,7 +4,7 @@ import codecs
 from datetime import datetime
 
 # 사용자로부터 서비스 키 입력
-service_key = 'Your_Key'
+service_key = input("Svc key :") # Enter your Service Key here.
 
 #현재시각 = datetime
 now = datetime.now()
@@ -50,33 +50,33 @@ if response.status_code == 200:
                 lon = item.find('lon').text
                 rem = item.find('rem').text
 
-                output = f"# : {cnt}, fcTp : {fcTp}, img : {img}, tmFc : {tmFc}, tmSeq : {tmSeq}, cnt : {cnt}, tmEqk : {tmEqk}, lat : {lat}, lon : {lon}, 진앙 위치 : {loc}, 참고사항 : {rem}"
+                output = f" # : {cnt}\n fcTp : {fcTp}\n img : {img}\n tmFc : {tmFc}\n tmSeq : {tmSeq}\n cnt : {cnt}\n tmEqk : {tmEqk}\n lat : {lat}\n lon : {lon}\n 진앙 위치 : {loc}\n 참고사항 : {rem}"
 
                 if 'stnId' in item.attrib:
                     stnId = item.find('stnId').text
-                    output += f", stnId : {stnId}"
+                    output += f"\n stnId : {stnId}"
 
                 if 'mt' in item.attrib:
                     mt = item.find('mt').text
-                    output += f", 규모 : {mt}"
+                    output += f"\n 규모 : {mt}"
 
                 if 'inT' in item.attrib:
                     inT = item.find('inT').text
-                    output += f", 진도 : {inT}"
+                    output += f"\n 진도 : {inT}"
 
                 if 'dep' in item.attrib:
                     dep = item.find('dep').text
-                    output += f", 깊이 : {dep}"
+                    output += f"\n 깊이 : {dep}"
                     
                 if 'cor' in item.attrib:
                     cor = item.find('cor').text
-                    output += f", 수정 사항 : {cor}"
+                    output += f"\n 수정 사항 : {cor}"
                 print(output)
         else:
             for header in headers.findall('.//header'):
                 rst = headers.find('resultCode').text
                 sts = headers.find('resultMsg').text
-                print(f"에러코드 {rst}로 인해 정보를 받지 못했습니다. 에러사유 : {sts}")
+                print(f"Cannot bring the informations, Error Code : {rst} / {sts}")
                 print(xml_data)
 else:
     print(f"API 호출 실패: {response.status_code}")
